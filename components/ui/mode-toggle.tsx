@@ -16,9 +16,7 @@ export function ModeToggle() {
   const { setTheme } = useTheme();
   const pathname = usePathname();
   const isLandingPage = pathname === "/" || pathname.startsWith("/#");
-
-  console.log("Is landing page?: ", isLandingPage);
-
+  if (pathname.includes("chat")) return null;
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>

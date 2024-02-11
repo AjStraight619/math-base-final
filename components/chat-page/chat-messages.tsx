@@ -1,8 +1,14 @@
 "use client";
 
+import { Message } from "ai/react";
 import { UserAvatar } from "../avatars/avatars";
 
-const ChatMessages = () => {
+type ChatMessagesProps = {
+  messages: Message[];
+  error: Error | undefined;
+};
+
+const ChatMessages = ({ messages, error }: ChatMessagesProps) => {
   return (
     <div className="container mx-auto overflow-auto p-4 flex-1 max-w-2xl">
       {/* Use some lorem ipsum text here to simulate messages */}

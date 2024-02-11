@@ -21,7 +21,6 @@ export const getSidebarMetaData = async () => {
       where: {
         userId,
       },
-
       select: {
         id: true,
         title: true,

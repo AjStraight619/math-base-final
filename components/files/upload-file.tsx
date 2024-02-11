@@ -18,14 +18,10 @@ const UploadFiles = ({ className, setFiles }: UploadFilesProps) => {
     }
   };
 
-  const handleClick = () => {
-    inputRef?.current?.click();
-  };
-
   return (
     <>
       <Paperclip
-        onClick={handleClick}
+        onClick={() => inputRef?.current?.click()}
         className={`${className} hover:cursor-pointer text-primary-foreground/50 hover:text-primary-foreground transition-colors duration-100`}
       />
       <input

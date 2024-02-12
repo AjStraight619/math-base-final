@@ -8,6 +8,8 @@ export default async function ChatLayout({
   children: React.ReactNode;
 }) {
   const sidebarMetaData = await getSidebarMetaData();
+
+  // TODO: Structure chat layout
   return (
     <div>
       <Sidebar sidebarMetaData={sidebarMetaData} />

@@ -29,7 +29,8 @@ export const runtime = "edge";
 
 export async function POST(req: NextRequest) {
   const chatId = req.nextUrl.searchParams.get("chatId") as unknown as string;
-  const formData = await req.formData();
+  const { text, files: JsonFiles } = await req.json();
+
   if (!chatId) {
     return NextResponse.json(
       { error: "chatId is required as a query parameter" },

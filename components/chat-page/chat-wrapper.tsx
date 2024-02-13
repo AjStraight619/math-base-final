@@ -1,11 +1,17 @@
 "use client";
 
+import { getChatById } from "@/app/chat/[chatId]/page";
+import { Prisma } from "@prisma/client";
 import { useChat } from "ai/react";
 import { ScrollArea } from "../ui/scroll-area";
 import ChatInput from "./chat-input";
 import ChatMessages from "./chat-messages";
 
-const ChatWrapper = () => {
+type ChatWrapperProps = {
+  chat: Prisma.PromiseReturnType<typeof getChatById>;
+};
+
+const ChatWrapper = ({ chat }: ChatWrapperProps) => {
   const {
     messages,
     input,

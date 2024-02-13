@@ -52,12 +52,11 @@ const ChatInput = ({
   const handleChatSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    const fileDataPromises = files.map((file) => convertFileToBase64(file)); // Implement this conversion function
+    const fileDataPromises = files.map((file) => convertFileToBase64(file));
     const fileData = await Promise.all(fileDataPromises);
 
     const data: Record<string, string> = {
       text: input,
-
       files: JSON.stringify(fileData),
     };
 

@@ -12,7 +12,7 @@ type SidebarDesktopProps = {
 const SidebarDesktop = ({
   children,
   isOpen,
-  toggleSidebar,
+  toggleSidebar: parentToggleSidebar,
 }: SidebarDesktopProps) => {
   const [isHovering, setIsHovering] = useState(false);
 
@@ -25,6 +25,11 @@ const SidebarDesktop = ({
     type: "spring",
     stiffness: 700,
     damping: 30,
+  };
+
+  const toggleSidebar = () => {
+    parentToggleSidebar();
+    setIsHovering(false);
   };
 
   return (

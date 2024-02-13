@@ -1,9 +1,12 @@
 "use client";
-
+import { useMediaQuery } from "@/hooks/useMediaQuery";
 import { SidebarMetaData } from "@/lib/types";
+import { debounce } from "@/lib/utils";
 import { usePathname } from "next/navigation";
+import { useCallback, useEffect, useState } from "react";
 import { SidebarChat } from "../chat-page/sidebar-chat";
-import Header from "../ui/header";
+import SidebarDesktop from "./sidebar-desktop";
+import SidebarMobile from "./sidebar-mobile";
 
 type SidebarProps = {
   sidebarMetaData: SidebarMetaData;
@@ -11,16 +14,41 @@ type SidebarProps = {
 
 const Sidebar = ({ sidebarMetaData }: SidebarProps) => {
   const pathname = usePathname();
+  const isDesktop = useMediaQuery("(min-width: 768px)");
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+
+  const toggleSidebar = useCallback(() => {
+    setIsSidebarOpen((prev) => !prev);
+  }, []);
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const debouncedHandleResize = debounce(() => {
+      setIsSidebarOpen(window.innerWidth > 768);
+    }, 300);
+
+    window.addEventListener("resize", debouncedHandleResize);
+
+    debouncedHandleResize();
+
+    return () => {
+      window.removeEventListener("resize", debouncedHandleResize);
+    };
+  }, []);
 
   const isChatPath = pathname.startsWith("/chat");
   return (
-    <aside className="fixed top-0 left-0 w-48 h-full border border-r p-2 z-50 bg-black">
-      <div className="flex flex-col w-full gap-4">
-        <Header width={40} height={40} />
-
-        {isChatPath && <SidebarChat sidebarMetaData={sidebarMetaData} />}
-      </div>
-    </aside>
+    <>
+      {isDesktop ? (
+        <SidebarDesktop isOpen={isSidebarOpen} toggleSidebar={toggleSidebar}>
+          {isChatPath && <SidebarChat sidebarMetaData={sidebarMetaData} />}
+        </SidebarDesktop>
+      ) : (
+        <SidebarMobile isOpen={isSidebarOpen} toggleSidebar={toggleSidebar}>
+          {isChatPath && <SidebarChat sidebarMetaData={sidebarMetaData} />}
+        </SidebarMobile>
+      )}
+    </>
   );
 };
 

@@ -1,4 +1,4 @@
-import { getSidebarMetaData } from "@/actions/chat-actions";
+import { getSidebarMetaData } from "@/actions/sidebar-actions";
 import { Prisma } from "@prisma/client";
 import { links } from "./data";
 

@@ -1,14 +1,7 @@
-import ChatWrapper from "@/components/chat-page/chat-wrapper";
-import { prisma } from "@/lib/prisma";
-
-export const getChatById = async (chatId: string) => {
-  const chatById = await prisma.chat.findUnique({
-    where: {
-      id: chatId,
-    },
-  });
-  return chatById;
-};
+import ChatData from "@/components/chat-page/chat-data";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import { Skeleton } from "@/components/ui/skeleton";
+import { Suspense } from "react";
 
 export default async function ChatPage({
   params,
@@ -17,11 +10,13 @@ export default async function ChatPage({
 }) {
   const { chatId } = params;
 
-  const chat = await getChatById(chatId);
-
   return (
     <main className="flex flex-col h-screen">
-      <ChatWrapper chat={chat} />
+      <ScrollArea>
+        <Suspense key={chatId} fallback={<Skeleton />}>
+          <ChatData chatId={chatId} />
+        </Suspense>
+      </ScrollArea>
     </main>
   );
 }

@@ -1,6 +1,7 @@
 "use client";
 import { SidebarMetaData } from "@/lib/types";
 import { useState } from "react";
+import SidebarItems from "../sidebar/sidebar-items";
 
 type SidebarChatProps = {
   sidebarMetaData: SidebarMetaData;
@@ -15,20 +16,23 @@ export const SidebarChat = ({ sidebarMetaData }: SidebarChatProps) => {
     setCurrentView(view);
   };
 
-  console.log(notes);
+  console.log("Chats: ", chats);
+  console.log("Notes: ", notes);
 
   return (
-    <div>
-      <button onClick={() => toggleView("chats")}>Chats</button>
-      <button onClick={() => toggleView("notes")}>Notes</button>
+    <div className="flex flex-col gap-2">
+      <div className="flex flex-row items-center justify-evenly">
+        <button onClick={() => toggleView("chats")}>Chats</button>
+        <button onClick={() => toggleView("notes")}>Notes</button>
+      </div>
 
       {error && <p>Error: {error}</p>}
 
-      <ul>
-        {currentView === "chats"
-          ? chats.map((chat) => <li key={chat.id}>{chat.title}</li>)
-          : notes.map((note) => <li key={note.id}>{note.title}</li>)}
-      </ul>
+      {currentView === "chats" ? (
+        <SidebarItems items={chats} />
+      ) : (
+        <SidebarItems items={notes} />
+      )}
     </div>
   );
 };

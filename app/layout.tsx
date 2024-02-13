@@ -1,6 +1,6 @@
 import { ThemeProvider } from "@/components/providers/theme-provider";
-import { ModeToggle } from "@/components/ui/mode-toggle";
 import ActiveSectionContextProvider from "@/context/active-section-context";
+
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
@@ -31,7 +31,7 @@ export default function RootLayout({
             <ActiveSectionContextProvider>
               {children}
             </ActiveSectionContextProvider>
-            <ModeToggle />
+            {/* <ModeToggle /> */}
           </ThemeProvider>
         </body>
       </html>

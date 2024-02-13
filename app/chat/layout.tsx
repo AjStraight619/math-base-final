@@ -1,4 +1,4 @@
-import { getSidebarMetaData } from "@/actions/chat-actions";
+import { getSidebarMetaData } from "@/actions/sidebar-actions";
 import Sidebar from "@/components/sidebar/sidebar";
 import React from "react";
 
@@ -13,6 +13,7 @@ export default async function ChatLayout({
   return (
     <div>
       <Sidebar sidebarMetaData={sidebarMetaData} />
+
       {children}
     </div>
   );

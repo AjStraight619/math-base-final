@@ -1,9 +1,9 @@
 "use client";
 
-import { getChatById } from "@/app/chat/[chatId]/page";
 import { Prisma } from "@prisma/client";
 import { useChat } from "ai/react";
-import { ScrollArea } from "../ui/scroll-area";
+import { useEffect, useRef } from "react";
+import { getChatById } from "./chat-data";
 import ChatInput from "./chat-input";
 import ChatMessages from "./chat-messages";
 
@@ -12,6 +12,7 @@ type ChatWrapperProps = {
 };
 
 const ChatWrapper = ({ chat }: ChatWrapperProps) => {
+  const counterRef = useRef(0);
   const {
     messages,
     input,
@@ -24,8 +25,13 @@ const ChatWrapper = ({ chat }: ChatWrapperProps) => {
     api: "/api/chat",
   });
 
+  useEffect(() => {
+    counterRef.current++;
+    console.log("component re rendered: ", counterRef.current);
+  }, []);
+
   return (
-    <ScrollArea>
+    <>
       <ChatMessages messages={messages} error={error} />
       <ChatInput
         handleInputChange={handleInputChange}
@@ -34,7 +40,7 @@ const ChatWrapper = ({ chat }: ChatWrapperProps) => {
         reload={reload}
         input={input}
       />
-    </ScrollArea>
+    </>
   );
 };
 

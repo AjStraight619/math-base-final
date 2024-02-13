@@ -16,7 +16,6 @@ export default function Home() {
         <CallToAction />
         <Features />
         <TopicsPreview />
-
         <FAQ />
         <Contact />
       </main>

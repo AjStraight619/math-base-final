@@ -1,18 +1,22 @@
+import { SidebarMetaData } from "@/lib/types";
 import { motion } from "framer-motion";
 import { ChevronLeft, ChevronRight, Tally1 } from "lucide-react";
 import { useState } from "react";
 import Header from "../ui/header";
+import UserOptions from "./user-options";
 
 type SidebarDesktopProps = {
   children: React.ReactNode;
   isOpen: boolean;
   toggleSidebar: () => void;
+  sidebarMetaData: SidebarMetaData;
 };
 
 const SidebarDesktop = ({
   children,
   isOpen,
   toggleSidebar: parentToggleSidebar,
+  sidebarMetaData,
 }: SidebarDesktopProps) => {
   const [isHovering, setIsHovering] = useState(false);
 
@@ -39,12 +43,19 @@ const SidebarDesktop = ({
         animate={isOpen ? "visible" : "hidden"}
         variants={sidebarVariants}
         transition={spring}
-        className="fixed top-0 left-0 w-48 h-full border border-r p-2 z-50 bg-black"
+        className="fixed top-0 left-0 w-48 h-full flex flex-col justify-between border-r p-2 z-50 bg-black"
       >
-        <Header width={40} height={40} />
-        {children}
+        <div>
+          <Header width={40} height={40} />
+          {children}
+        </div>
+        <UserOptions
+          mostRecentChatId={sidebarMetaData.chats[0]?.id}
+          mostRecentNoteId={sidebarMetaData.notes[0]?.id}
+        />
       </motion.aside>
       <button
+        key={isOpen ? "open" : "closed"}
         onClick={toggleSidebar}
         onMouseEnter={() => setIsHovering(true)}
         onMouseLeave={() => setIsHovering(false)}

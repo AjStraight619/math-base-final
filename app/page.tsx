@@ -9,7 +9,7 @@ import TopicsPreview from "@/components/landing-page/topics-preview";
 export default function Home() {
   return (
     <>
-      <div className="background-glow"></div>
+      {/* <div className="background-glow"></div> */}
       <main className="flex min-h-screen flex-col items-center justify-between p-24">
         <Header />
         <TitleSection />

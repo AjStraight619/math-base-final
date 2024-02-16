@@ -5,6 +5,7 @@ import { debounce } from "@/lib/utils";
 import { usePathname } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
 import { SidebarChat } from "../chat-page/sidebar-chat";
+import SidebarDashboard from "../dashboard-page/sidebar-dashboard";
 import SidebarDesktop from "./sidebar-desktop";
 import SidebarMobile from "./sidebar-mobile";
 
@@ -36,12 +37,23 @@ const Sidebar = ({ sidebarMetaData }: SidebarProps) => {
     };
   }, []);
 
+  if (pathname === "/") {
+    return null;
+  }
+
   const isChatPath = pathname.startsWith("/chat");
+  const isDashboardPath = pathname.startsWith("/dashboard");
+  console.log("Is Dashboard Path: ", isDashboardPath);
   return (
     <>
       {isDesktop ? (
-        <SidebarDesktop isOpen={isSidebarOpen} toggleSidebar={toggleSidebar}>
+        <SidebarDesktop
+          isOpen={isSidebarOpen}
+          toggleSidebar={toggleSidebar}
+          sidebarMetaData={sidebarMetaData}
+        >
           {isChatPath && <SidebarChat sidebarMetaData={sidebarMetaData} />}
+          {isDashboardPath && <SidebarDashboard />}
         </SidebarDesktop>
       ) : (
         <SidebarMobile isOpen={isSidebarOpen} toggleSidebar={toggleSidebar}>

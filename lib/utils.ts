@@ -51,3 +51,10 @@ export const debounce = <T extends (...args: any[]) => void>(
     timeout = setTimeout(later, wait);
   };
 };
+
+export const getUserInitials = (
+  firstName: string | null | undefined,
+  lastName: string | null | undefined
+) => {
+  return `${firstName?.charAt(0)}${lastName?.charAt(0)}`;
+};

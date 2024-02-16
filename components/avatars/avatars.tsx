@@ -1,9 +1,15 @@
-import { Avatar, AvatarFallback } from "../ui/avatar";
+import { getUserInitials } from "@/lib/utils";
+import { useKindeBrowserClient } from "@kinde-oss/kinde-auth-nextjs";
+import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 
 export const UserAvatar = () => {
+  const { user } = useKindeBrowserClient();
   return (
     <Avatar>
-      <AvatarFallback>AS</AvatarFallback>
+      <AvatarImage src={user?.picture!} />
+      <AvatarFallback>
+        {getUserInitials(user?.given_name, user?.family_name)}
+      </AvatarFallback>
     </Avatar>
   );
 };

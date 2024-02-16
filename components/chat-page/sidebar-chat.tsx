@@ -16,9 +16,6 @@ export const SidebarChat = ({ sidebarMetaData }: SidebarChatProps) => {
     setCurrentView(view);
   };
 
-  console.log("Chats: ", chats);
-  console.log("Notes: ", notes);
-
   return (
     <div className="flex flex-col gap-2">
       <div className="flex flex-row items-center justify-evenly">

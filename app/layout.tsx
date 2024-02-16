@@ -1,6 +1,8 @@
 import { ThemeProvider } from "@/components/providers/theme-provider";
 import ActiveSectionContextProvider from "@/context/active-section-context";
 
+import { getSidebarMetaData } from "@/actions/sidebar-actions";
+import Sidebar from "@/components/sidebar/sidebar";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
@@ -12,11 +14,13 @@ export const metadata: Metadata = {
   description: "All in one AI assisted math learning platform",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const sidebarMetaData = await getSidebarMetaData();
+
   return (
     <>
       <html lang="en" suppressHydrationWarning className="!scroll-smooth">
@@ -29,6 +33,7 @@ export default function RootLayout({
             disableTransitionOnChange
           >
             <ActiveSectionContextProvider>
+              <Sidebar sidebarMetaData={sidebarMetaData} />
               {children}
             </ActiveSectionContextProvider>
             {/* <ModeToggle /> */}

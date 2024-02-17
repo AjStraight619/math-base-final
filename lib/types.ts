@@ -1,5 +1,5 @@
+import { getDashboardData } from "@/actions/dashboardActions";
 import { getSidebarMetaData } from "@/actions/sidebar-actions";
-import { getDashboardData } from "@/app/dashboard/page";
 import { Prisma } from "@prisma/client";
 import { links } from "./data";
 

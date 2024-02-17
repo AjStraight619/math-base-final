@@ -99,11 +99,11 @@ const UserOptions = ({
           {userOptions.map((option, index) => (
             <motion.li variants={item} className="w-full" key={index}>
               <Link
-                className="flex justify-between text-primary/60 hover:text-primary"
+                className="flex justify-start items-center text-primary/60 hover:text-primary gap-2"
                 href={option.link}
               >
-                <span>{option.name}</span>
                 <span>{option.icon}</span>
+                <span>{option.name}</span>
               </Link>
             </motion.li>
           ))}
@@ -111,9 +111,12 @@ const UserOptions = ({
           <Separator />
 
           <li className="w-full">
-            <Link className="flex justify-between" href={logoutOption.link}>
-              <span>{logoutOption.name}</span>
+            <Link
+              className="flex justify-start items-center gap-2"
+              href={logoutOption.link}
+            >
               <span>{logoutOption.icon}</span>
+              <span>{logoutOption.name}</span>
             </Link>
           </li>
         </motion.ul>

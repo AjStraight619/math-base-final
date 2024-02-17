@@ -6,7 +6,7 @@ const CallToAction = () => {
   return (
     <div
       id="home"
-      className="flex flex-row items-center justify-center gap-4 mt-40"
+      className="flex flex-row items-center justify-center gap-4 mt-20"
     >
       <RegisterLink className="border-2 bg-primary dark:text-black text-lg font-semibold py-3 px-6 rounded-lg shadow-md hover:bg-primary/50 hover:shadow-gray-500/50 transition duration-300 ease-in-out">
         Sign up

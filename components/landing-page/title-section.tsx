@@ -67,7 +67,7 @@ const TitleSection = () => {
             <h1 className="text-4xl font-semibold text-glow">Math Base</h1>
           </div>
 
-          <p className="text-xl text-muted-foreground">
+          <p className="text-xl text-muted-foreground mt-8">
             Your all-in-one AI-assisted math learning platform.
           </p>
         </header>

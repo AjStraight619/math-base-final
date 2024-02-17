@@ -48,6 +48,13 @@ const quillFormats = [
   "formula",
 ];
 
+const latexString = "\\int_0^\\infty e^{-x^2} dx = \\frac{\\sqrt{\\pi}}{2}";
+
+// Render the LaTeX string with KaTeX to HTML
+const renderedLatex = katex.renderToString(latexString, {
+  throwOnError: false,
+});
+
 const Editor = ({ note }: TestNote) => {
   const [value, setValue] = useState("");
   const editorRef = useRef<ReactQuill>(null);
@@ -63,12 +70,17 @@ const Editor = ({ note }: TestNote) => {
   }, []);
 
   useEffect(() => {
-    // Insert a test LaTeX blot to see if it is working
-    const quillEditor = editorRef.current?.getEditor();
-    setTimeout(() => {
-      quillEditor?.insertText(0, "LaTeX: "); // Insert some text
-      quillEditor?.insertEmbed(7, "customLatex", "x^2"); // Insert LaTeX
-    }, 1000);
+    // Paste the rendered LaTeX when the component mounts
+    if (editorRef.current) {
+      console.log("In editorRef.current");
+      const quill = editorRef.current.getEditor();
+      const range = quill.getSelection();
+      if (range) {
+        // This will insert the rendered LaTeX where the cursor is
+
+        quill.clipboard.dangerouslyPasteHTML(range.index, renderedLatex);
+      }
+    }
   }, []);
 
   return (

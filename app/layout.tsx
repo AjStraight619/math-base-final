@@ -3,6 +3,7 @@ import ActiveSectionContextProvider from "@/context/active-section-context";
 
 import { getSidebarMetaData } from "@/actions/sidebar-actions";
 import Sidebar from "@/components/sidebar/sidebar";
+import ActiveItemContextProvider from "@/context/active-item-context";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
@@ -33,8 +34,10 @@ export default async function RootLayout({
             disableTransitionOnChange
           >
             <ActiveSectionContextProvider>
-              <Sidebar sidebarMetaData={sidebarMetaData} />
-              {children}
+              <ActiveItemContextProvider>
+                <Sidebar sidebarMetaData={sidebarMetaData} />
+                {children}
+              </ActiveItemContextProvider>
             </ActiveSectionContextProvider>
             {/* <ModeToggle /> */}
           </ThemeProvider>

@@ -1,4 +1,5 @@
 "use client";
+import { useSidebarContext } from "@/context/sidebar-context";
 import { useKindeBrowserClient } from "@kinde-oss/kinde-auth-nextjs";
 import { motion } from "framer-motion";
 import { Skeleton } from "../ui/skeleton";
@@ -20,6 +21,7 @@ const variants = {
 
 export const Header = () => {
   const { user, isAuthenticated, isLoading } = useKindeBrowserClient();
+  const { isSidebarOpen } = useSidebarContext();
   return (
     <>
       {isAuthenticated ? (
@@ -27,7 +29,9 @@ export const Header = () => {
           animate="show"
           initial="hidden"
           variants={variants}
-          className="text-2xl font-semibold self-center pt-20"
+          className={`text-2xl font-semibold self-center pt-20 ${
+            isSidebarOpen ? "ml-8" : ""
+          }`}
         >
           {isLoading && <Skeleton />}
           Welcome Back, {user?.given_name}!

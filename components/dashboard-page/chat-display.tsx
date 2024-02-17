@@ -7,6 +7,7 @@ import {
   CardHeader,
   CardTitle,
 } from "../ui/card";
+import ItemOptions from "./item-options";
 
 type ChatDisplayProps = {
   chats: ChatWithLastMessage;
@@ -44,7 +45,7 @@ const ChatDisplay = ({ chats }: ChatDisplayProps) => {
             whileHover={{ scale: 1.05 }}
             key={chat.id}
           >
-            <Card className="max-w-[12rem] relative">
+            <Card className="max-w-[12rem] h-[14rem] relative">
               <CardHeader>
                 <CardTitle className="flex flex-row justify-between items-center">
                   <span className="text-lg">{chat.title}</span>
@@ -54,9 +55,11 @@ const ChatDisplay = ({ chats }: ChatDisplayProps) => {
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                <p>{chat.messages[0].content}</p>
+                <p>{chat.messages[0]?.content}</p>
               </CardContent>
-              <CardFooter></CardFooter>
+              <CardFooter className="absolute bottom-1">
+                <ItemOptions id={chat.id} />
+              </CardFooter>
             </Card>
           </motion.li>
         ))}

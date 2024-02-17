@@ -60,14 +60,14 @@ const SidebarDesktop = ({
         onMouseEnter={() => setIsHovering(true)}
         onMouseLeave={() => setIsHovering(false)}
         className={`fixed top-1/2 ${
-          isOpen ? "left-[13rem]" : "left-[0.8rem]"
+          isOpen ? "left-[12.5rem]" : "left-[0.8rem]"
         } -translate-y-1/2 transform z-50`}
       >
         {isOpen ? (
           isHovering ? (
             <ChevronLeft />
           ) : (
-            <Tally1 className="ml-2" />
+            <Tally1 className="ml-1" />
           )
         ) : (
           <ChevronRight />

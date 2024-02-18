@@ -59,3 +59,36 @@ export const deleteChat = async (chatId: string) => {
     };
   }
 };
+
+export const EditChat = async (formData: FormData) => {
+  console.log("In edit chat action");
+  const id = formData.get("id") as string;
+  const title = formData.get("title") as string;
+  const content = formData.get("content") as string;
+
+  console.log("Title: ", title);
+
+  try {
+    await prisma.chat.update({
+      where: {
+        id,
+      },
+      data: {
+        title,
+        messages: {},
+      },
+    });
+    revalidatePath("/");
+    return {
+      success: true,
+      error: null,
+    };
+  } catch (err) {
+    const error = getErrorMessage(err);
+    console.log(error);
+    return {
+      success: false,
+      error,
+    };
+  }
+};

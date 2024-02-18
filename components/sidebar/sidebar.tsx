@@ -44,7 +44,6 @@ const Sidebar = ({ sidebarMetaData }: SidebarProps) => {
 
   const isChatPath = pathname.startsWith("/chat");
   const isDashboardPath = pathname.startsWith("/dashboard");
-  console.log("Is Dashboard Path: ", isDashboardPath);
   return (
     <>
       {isDesktop ? (

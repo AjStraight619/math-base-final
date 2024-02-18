@@ -13,3 +13,12 @@ export const UserAvatar = () => {
     </Avatar>
   );
 };
+
+export const AiAvatar = () => {
+  return (
+    <Avatar>
+      <AvatarImage src="" />
+      <AvatarFallback>AI</AvatarFallback>
+    </Avatar>
+  );
+};

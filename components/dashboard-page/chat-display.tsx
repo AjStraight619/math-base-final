@@ -1,12 +1,7 @@
+import { useSidebarContext } from "@/context/sidebar-context";
 import { ChatWithLastMessage } from "@/lib/types";
 import { motion } from "framer-motion";
-import {
-  Card,
-  CardContent,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "../ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
 import ItemOptions from "./item-options";
 
 type ChatDisplayProps = {
@@ -30,6 +25,8 @@ const items = {
 };
 
 const ChatDisplay = ({ chats }: ChatDisplayProps) => {
+  const { isSidebarOpen } = useSidebarContext();
+
   return (
     <>
       <header className="text-muted-foreground">Most recent chats</header>
@@ -37,7 +34,11 @@ const ChatDisplay = ({ chats }: ChatDisplayProps) => {
         variants={itemVariants}
         animate="show"
         initial="hidden"
-        className="grid grid-cols-1 sm:grid-cols-3 md:grid-cols-5 gap-2 mx-auto px-4"
+        className={`grid grid-cols-1 gap-2 px-4 ${
+          isSidebarOpen
+            ? "md:grid-cols-2 sm:grid-cols-2 lg:grid-cols-3"
+            : "md:grid-cols-4 sm:grid-cols-3 lg:grid-cols-5 mx-auto"
+        }`}
       >
         {chats.map((chat) => (
           <motion.li
@@ -49,17 +50,23 @@ const ChatDisplay = ({ chats }: ChatDisplayProps) => {
               <CardHeader>
                 <CardTitle className="flex flex-row justify-between items-center">
                   <span className="text-lg">{chat.title}</span>
-                  <span className="text-sm text-muted-foreground">
+                  <span className="text-xs text-muted-foreground">
                     {chat.createdAt.toLocaleDateString()}
                   </span>
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                <p>{chat.messages[0]?.content}</p>
+                <p className="text-sm text-pretty line-clamp-3">
+                  {chat.messages[0]?.content}
+                </p>
               </CardContent>
-              <CardFooter className="absolute bottom-1">
-                <ItemOptions id={chat.id} />
-              </CardFooter>
+              <div className="absolute bottom-2 flex flex-row items-center justify-between w-full p-2">
+                <ItemOptions
+                  id={chat.id}
+                  title={chat.title}
+                  content={chat.messages[0]?.content}
+                />
+              </div>
             </Card>
           </motion.li>
         ))}

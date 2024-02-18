@@ -7,7 +7,7 @@ import { Separator } from "../ui/separator";
 const SidebarDashboard = () => {
   const { activeItems, setActiveItems } = useActiveItemContext();
   return (
-    <div className="flex flex-col items-start justify-center gap-2 w-full pt-6">
+    <div className="flex flex-col items-center justify-center gap-2 w-full pt-6">
       <Suspense fallback={<div>Loading...</div>}>
         <Search />
       </Suspense>

@@ -1,5 +1,5 @@
 import { deleteChat } from "@/actions/chatActions";
-import { Trash } from "lucide-react";
+import { Trash2 } from "lucide-react";
 import toast from "react-hot-toast";
 import {
   AlertDialog,
@@ -27,8 +27,8 @@ const DeleteItem = ({ id }: { id: string }) => {
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
-        <button>
-          <Trash />
+        <button className="hover:text-primary">
+          <Trash2 size={20} />
         </button>
       </AlertDialogTrigger>
 

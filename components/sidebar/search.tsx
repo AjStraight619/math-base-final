@@ -23,7 +23,7 @@ const Search = () => {
     <>
       <div className="relative w-full">
         <Input
-          className="text-muted-foreground pl-10 w-[10rem]"
+          className="text-muted-foreground pl-10 w-full"
           type="text"
           placeholder="Search..."
           onChange={(e) => handleSearch(e.target.value)}

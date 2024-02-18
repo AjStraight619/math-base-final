@@ -1,5 +1,5 @@
 import { getErrorMessage } from "@/lib/utils";
-import { StreamingTextResponse } from "ai";
+import { OpenAIStream, StreamingTextResponse } from "ai";
 import { NextRequest, NextResponse } from "next/server";
 import OpenAI from "openai";
 
@@ -29,101 +29,88 @@ export const runtime = "edge";
 
 export async function POST(req: NextRequest) {
   const chatId = req.nextUrl.searchParams.get("chatId") as unknown as string;
-  const { text, files: JsonFiles } = await req.json();
-
-  if (!chatId) {
-    return NextResponse.json(
-      { error: "chatId is required as a query parameter" },
-      { status: 400 }
-    );
-  }
-
   try {
-  } catch (err) {
-    const error = getErrorMessage(err);
-    return NextResponse.json({ error }, { status: 500 });
+    const {
+      messages,
+      prompt,
+      files: JSONFiles,
+      mathResponse,
+    } = await req.json();
+
+    const lastUserMessage = messages.slice(-1)[0];
+
+    if (lastUserMessage && lastUserMessage.role === "user") {
+      const response = await openai.chat.completions.create({
+        model: "gpt-4-0125-preview",
+        stream: true,
+        messages: [
+          {
+            role: "system",
+            content: `The assistant Note Genius, based on GPT-4 technology, is designed to provide helpful and precise answers in mathematics. For all mathematical responses, please format equations and expressions using LaTeX syntax. Ensure that the LaTeX is suitable for rendering in Markdown with rehype-katex and remark-math plugins. Examples include inline equations like $E = mc^2$ and display equations like $$x = \\frac{-b \\pm \\sqrt{b^2 - 4ac}}{2a}$$. 
+              ${prompt ? prompt : ""}`,
+          },
+          ...messages,
+        ],
+      });
+
+      const stream = OpenAIStream(response, {
+        onCompletion: async (completion: string) => {
+          const conversationUpdate: Message[] = [
+            lastUserMessage,
+            { role: "assistant", content: completion },
+          ];
+          await updateMessages(conversationUpdate, chatId);
+        },
+      });
+
+      return new StreamingTextResponse(stream);
+    } else {
+      throw new Error(
+        "No user message found or the last message is not from the user."
+      );
+    }
+  } catch (error) {
+    if (error instanceof OpenAI.APIError) {
+      const { name, status, headers, message } = error;
+      console.log("OpenAI API error: ", error);
+      return NextResponse.json({ name, status, headers, message }, { status });
+    } else {
+      return NextResponse.json(
+        { error: "Something went wrong" },
+        { status: 500 }
+      );
+    }
   }
-
-  //   try {
-  //     const { messages: userMessages, prompt, mathResponse } = await req.json();
-  //     JSON.stringify(mathResponse);
-
-  //     console.log("userMessages: ", userMessages);
-
-  //     const lastUserMessage = userMessages.slice(-1)[0];
-
-  //     if (lastUserMessage && lastUserMessage.role === "user") {
-  //       const response = await openai.chat.completions.create({
-  //         model: "gpt-4-1106-preview",
-  //         stream: true,
-  //         messages: [
-  //           {
-  //             role: "system",
-  //             content: `The assistant Note Genius, based on GPT-4 technology, is designed to provide helpful and precise answers in mathematics. For all mathematical responses, please format equations and expressions using LaTeX syntax. Ensure that the LaTeX is suitable for rendering in Markdown with rehype-katex and remark-math plugins. Examples include inline equations like $E = mc^2$ and display equations like $$x = \\frac{-b \\pm \\sqrt{b^2 - 4ac}}{2a}$$.
-  //               ${prompt ? prompt : ""}`,
-  //           },
-  //           ...userMessages,
-  //         ],
-  //       });
-
-  //       const stream = OpenAIStream(response, {
-  //         onCompletion: async (completion: string) => {
-  //           const conversationUpdate: Message[] = [
-  //             lastUserMessage,
-  //             { role: "assistant", content: completion },
-  //           ];
-  //           await updateMessages(conversationUpdate, chatId);
-  //         },
-  //       });
-
-  //       return new StreamingTextResponse(stream);
-  //     } else {
-  //       throw new Error(
-  //         "No user message found or the last message is not from the user."
-  //       );
-  //     }
-  //   } catch (error) {
-  //     if (error instanceof OpenAI.APIError) {
-  //       const { name, status, headers, message } = error;
-  //       console.log("OpenAI API error: ", error);
-  //       return NextResponse.json({ name, status, headers, message }, { status });
-  //     } else {
-  //       return NextResponse.json(
-  //         { error: "Something went wrong" },
-  //         { status: 500 }
-  //       );
-  //     }
-  //   }
-  // }
-
-  // /**
-  //  * Updates the chat with new messages in the conversation.
-  //  *
-  //  * @param {Message[]} conversationUpdate - An array of messages to be added to the chat.
-  //  * @param {string} chatId - The unique identifier of the chat.
-  //  */
-
-  // const updateMessages = async (
-  //   conversationUpdate: Message[],
-  //   chatId: string
-  // ) => {
-  //   try {
-  //     const res = await fetch(`${baseUrl}/api/users-chats`, {
-  //       method: "POST",
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //       },
-  //       body: JSON.stringify({
-  //         chatId: chatId,
-  //         conversationUpdate: conversationUpdate,
-  //       }),
-  //     });
-  //     if (res.ok) {
-  //       const data = await res.json();
-  //       console.log("successful update to db ", data);
-  //     }
-  //   } catch (error) {
-  //     const err = getErrorMessage(error);
-  //     console.error("Error updating messages: ", err);
-  //   }
 }
+
+/**
+ * Updates the chat with new messages in the conversation.
+ *
+ * @param {Message[]} conversationUpdate - An array of messages to be added to the chat.
+ * @param {string} chatId - The unique identifier of the chat.
+ */
+
+const updateMessages = async (
+  conversationUpdate: Message[],
+  chatId: string
+) => {
+  try {
+    const res = await fetch(`${baseUrl}/api/users-chats`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        chatId: chatId,
+        conversationUpdate: conversationUpdate,
+      }),
+    });
+    if (res.ok) {
+      const data = await res.json();
+      console.log("successful update to db ", data);
+    }
+  } catch (error) {
+    const err = getErrorMessage(error);
+    console.error("Error updating messages: ", err);
+  }
+};

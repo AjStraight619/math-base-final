@@ -16,7 +16,7 @@ const Items = ({ items }: ItemsProps) => {
   return (
     <div
       className={`flex flex-col justify-center items-center gap-2 w-full pt-6 ${
-        isSidebarOpen ? "ml-8" : ""
+        isSidebarOpen ? "md:pl-8" : ""
       }`}
     >
       {error && <p>Error: {error}</p>}

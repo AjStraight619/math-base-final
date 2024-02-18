@@ -6,12 +6,21 @@ export const getChatById = async (chatId: string) => {
     where: {
       id: chatId,
     },
+    include: {
+      messages: {
+        orderBy: {
+          createdAt: "asc",
+        },
+      },
+    },
   });
   return chatById;
 };
 
 const ChatData = async ({ chatId }: { chatId: string }) => {
   const chat = await getChatById(chatId);
+
+  console.log("Chat: ", chat);
 
   return <ChatWrapper chat={chat} />;
 };

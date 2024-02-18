@@ -83,19 +83,6 @@ const ChatInput = ({
     });
   };
 
-  // useEffect(() => {
-  //   const handleKeyDown = (e: KeyboardEvent) => {
-  //     if (e.key === "Enter") {
-  //       if (e.shiftKey) return;
-  //       e.preventDefault();
-  //       handleSubmit(new Event("submit"));
-  //     }
-  //   }
-
-  //   window.addEventListener("keydown", handleKeyDown);
-  //   return () => window.removeEventListener("keydown", handleKeyDown);
-  // }, [])
-
   const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
     if (e.key === "Enter" && !e.shiftKey) {
       e.preventDefault();

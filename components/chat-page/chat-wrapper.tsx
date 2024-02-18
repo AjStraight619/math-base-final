@@ -4,7 +4,7 @@ import { useId } from "@/hooks/useId";
 import { Prisma } from "@prisma/client";
 import { Message, UseChatOptions } from "ai";
 import { useChat } from "ai/react";
-import { useEffect, useLayoutEffect, useMemo, useRef } from "react";
+import { useEffect, useMemo, useRef } from "react";
 import { getChatById } from "./chat-data";
 import ChatInput from "./chat-input";
 import ChatMessages from "./chat-messages";
@@ -35,12 +35,6 @@ const ChatWrapper = ({ chat }: ChatWrapperProps) => {
     console.log("component re rendered: ", counterRef.current);
   }, []);
 
-  useLayoutEffect(() => {
-    if (bottomOfMessagesRef.current) {
-      bottomOfMessagesRef.current.scrollIntoView({ behavior: "smooth" });
-    }
-  }, [messages]);
-
   return (
     <>
       <ChatMessages messages={messages} error={error} />
@@ -51,7 +45,6 @@ const ChatWrapper = ({ chat }: ChatWrapperProps) => {
         reload={reload}
         input={input}
       />
-      <div ref={bottomOfMessagesRef}></div>
     </>
   );
 };

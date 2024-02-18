@@ -17,10 +17,12 @@ export const getChatById = async (chatId: string) => {
   return chatById;
 };
 
+const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
+
 const ChatData = async ({ chatId }: { chatId: string }) => {
   const chat = await getChatById(chatId);
 
-  console.log("Chat: ", chat);
+  await delay(5000);
 
   return <ChatWrapper chat={chat} />;
 };

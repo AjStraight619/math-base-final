@@ -101,6 +101,7 @@ const UserOptions = ({
               <Link
                 className="flex justify-start items-center text-primary/60 hover:text-primary gap-2"
                 href={option.link}
+                scroll={false}
               >
                 <span>{option.icon}</span>
                 <span>{option.name}</span>

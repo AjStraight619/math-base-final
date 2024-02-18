@@ -86,7 +86,7 @@ const ChatInput = ({
   const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
     if (e.key === "Enter" && !e.shiftKey) {
       e.preventDefault();
-      // Create a dummy form event or pass null/undefined if handleSubmit can handle it
+
       const dummyEvent = {
         preventDefault: () => {},
         currentTarget: formRef.current,

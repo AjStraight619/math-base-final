@@ -1,12 +1,11 @@
 "use client";
 
-import SyntaxHighlighter from "react-syntax-highlighter/dist/esm/default-highlight";
-import { docco } from "react-syntax-highlighter/dist/esm/styles/hljs";
+import SlateEditor from "@/components/note-page/slate-editor";
 const TestCode = () => {
   return (
-    <SyntaxHighlighter language="javascript" style={docco}>
-      {"(num) => num + 1"}
-    </SyntaxHighlighter>
+    <div className="h-full flex flex-col items-center justify-center">
+      <SlateEditor />
+    </div>
   );
 };
 

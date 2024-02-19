@@ -4,6 +4,7 @@ import Sidebar from "@/components/sidebar/sidebar";
 import ActiveItemContextProvider from "@/context/active-item-context";
 import ActiveSectionContextProvider from "@/context/active-section-context";
 import SidebarContextProvider from "@/context/sidebar-context";
+import { Analytics } from "@vercel/analytics/react";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import { Toaster } from "react-hot-toast";
@@ -45,6 +46,7 @@ export default async function RootLayout({
             {/* <ModeToggle /> */}
             <Toaster />
           </ThemeProvider>
+          <Analytics />
         </body>
       </html>
     </>

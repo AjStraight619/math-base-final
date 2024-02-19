@@ -160,25 +160,29 @@ const SlateEditor = () => {
   const Leaf = (props: RenderLeafProps) => {
     const { attributes, children, leaf } = props;
 
-    const classes = `
-    ${leaf.bold ? "font-bold" : ""}
-    ${leaf.italic ? "italic" : ""}
-    ${leaf.underline ? "underline" : ""}
-    ${leaf.code ? "font-mono bg-gray-100 p-1 rounded" : ""}
-  `;
+    const style: React.CSSProperties = {
+      fontWeight: leaf.bold ? "bold" : undefined,
+      fontStyle: leaf.italic ? "italic" : undefined,
+      textDecoration: leaf.underline ? "underline" : undefined,
+      fontFamily: leaf.code ? "monospace" : undefined,
+      backgroundColor: leaf.code ? "#f7f7f7" : undefined,
+      padding: leaf.code ? "4px" : undefined,
+      borderRadius: leaf.code ? "4px" : undefined,
+    };
 
-    // For non-code text, apply the classes directly to a span
+    // Apply the styles directly to a span or code element
+    // The choice of element can still be based on whether it's code or not
     if (!leaf.code) {
       return (
-        <span {...attributes} className={classes}>
+        <span {...attributes} style={style}>
           {children}
         </span>
       );
     }
 
-    // For code, wrap the text in a `code` element with additional styles
+    // For code, wrap the text in a `code` element
     return (
-      <code {...attributes} className={classes}>
+      <code {...attributes} style={style}>
         {children}
       </code>
     );

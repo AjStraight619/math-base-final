@@ -44,7 +44,7 @@ const Features = () => {
     >
       <SectionHeading className="">Why Math Base?</SectionHeading>
       <motion.ul
-        className="grid grid-cols-1 gap-2 sm:grid-cols-2  w-full items-center"
+        className="grid grid-cols-1 gap-2 sm:grid-cols-2  w-full items-center justify-items-center"
         variants={containerVariants}
         initial="hidden"
         animate="show"

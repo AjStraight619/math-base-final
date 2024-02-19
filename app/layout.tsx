@@ -28,7 +28,7 @@ export default async function RootLayout({
     <>
       <html lang="en" suppressHydrationWarning className="!scroll-smooth">
         <head />
-        <body className={`${inter.className} relative`}>
+        <body className={`${inter.className}  relative`}>
           <ThemeProvider
             attribute="class"
             defaultTheme="system"

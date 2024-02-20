@@ -1,7 +1,9 @@
 "use client";
 import { useSidebarContext } from "@/context/sidebar-context";
+import useLocalStorage from "@/hooks/useLocalStorage";
 import { useKindeBrowserClient } from "@kinde-oss/kinde-auth-nextjs";
 import { motion } from "framer-motion";
+import { useEffect } from "react";
 import { Skeleton } from "../ui/skeleton";
 
 const variants = {
@@ -22,6 +24,14 @@ const variants = {
 export const Header = () => {
   const { user, isAuthenticated, isLoading } = useKindeBrowserClient();
   const { isSidebarOpen } = useSidebarContext();
+  const [name, setName] = useLocalStorage<string | null>("name", null);
+
+  useEffect(() => {
+    if (isAuthenticated && user?.given_name !== name) {
+      setName(user?.given_name!);
+    }
+  }, [user, isAuthenticated, setName, name]);
+
   return (
     <>
       {isAuthenticated ? (
@@ -34,7 +44,7 @@ export const Header = () => {
           }`}
         >
           {isLoading && <Skeleton />}
-          Welcome Back, {user?.given_name}!
+          Welcome Back, {name}!
         </motion.header>
       ) : (
         <Skeleton />

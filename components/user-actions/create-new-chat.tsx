@@ -18,13 +18,13 @@ const CreateNewChat = () => {
     }
   };
   return (
-    <CustomTooltip content="New Chat">
-      <form action={handleNewChat}>
-        <SubmitButtonIcon>
+    <form action={handleNewChat}>
+      <SubmitButtonIcon>
+        <CustomTooltip content="New Chat">
           <SquarePen />
-        </SubmitButtonIcon>
-      </form>
-    </CustomTooltip>
+        </CustomTooltip>
+      </SubmitButtonIcon>
+    </form>
   );
 };
 

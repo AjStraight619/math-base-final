@@ -1,6 +1,7 @@
 import { useItemDetails } from "@/hooks/useItemDetails";
 import { MoreVertical, PencilLine } from "lucide-react";
 import { usePathname } from "next/navigation";
+import CustomTooltip from "../ui/custom-tooltip";
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
 import DeleteItem from "../user-actions/delete-item";
 import EditItemDialog from "../user-actions/edit-item-dialog";
@@ -42,7 +43,9 @@ const ItemOptions = ({
       >
         <PopoverTrigger asChild>
           <button>
-            <MoreVertical size={15} />
+            <CustomTooltip content="More options">
+              <MoreVertical size={15} />
+            </CustomTooltip>
           </button>
         </PopoverTrigger>
         <PopoverContent className="w-[8rem]">

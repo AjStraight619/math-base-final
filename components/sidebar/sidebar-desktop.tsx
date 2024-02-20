@@ -1,7 +1,9 @@
+import { useSidebarContext } from "@/context/sidebar-context";
 import { SidebarMetaData } from "@/lib/types";
 import { motion } from "framer-motion";
 import { ChevronLeft, ChevronRight, Tally1 } from "lucide-react";
 import { useState } from "react";
+import CustomTooltip from "../ui/custom-tooltip";
 import Header from "../ui/header";
 import { ScrollArea } from "../ui/scroll-area";
 import CreateNewChat from "../user-actions/create-new-chat";
@@ -9,18 +11,13 @@ import UserOptions from "./user-options";
 
 type SidebarDesktopProps = {
   children: React.ReactNode;
-  isOpen: boolean;
-  toggleSidebar: () => void;
   sidebarMetaData: SidebarMetaData;
 };
 
-const SidebarDesktop = ({
-  children,
-  isOpen,
-  toggleSidebar: parentToggleSidebar,
-  sidebarMetaData,
-}: SidebarDesktopProps) => {
+const SidebarDesktop = ({ children, sidebarMetaData }: SidebarDesktopProps) => {
   const [isHovering, setIsHovering] = useState(false);
+
+  const { isSidebarOpen, setIsSidebarOpen } = useSidebarContext();
 
   const sidebarVariants = {
     hidden: { x: "-100%", opacity: 0 },
@@ -34,7 +31,7 @@ const SidebarDesktop = ({
   };
 
   const toggleSidebar = () => {
-    parentToggleSidebar();
+    setIsSidebarOpen((prev) => !prev);
     setIsHovering(false);
   };
 
@@ -42,7 +39,7 @@ const SidebarDesktop = ({
     <>
       <motion.aside
         initial="hidden"
-        animate={isOpen ? "visible" : "hidden"}
+        animate={isSidebarOpen ? "visible" : "hidden"}
         variants={sidebarVariants}
         transition={spring}
         className="fixed top-0 left-0 w-48 h-full flex flex-col border-r pl-2 z-50 bg-black"
@@ -64,23 +61,28 @@ const SidebarDesktop = ({
           />
         </div>
       </motion.aside>
+
       <button
         onClick={toggleSidebar}
         onMouseEnter={() => setIsHovering(true)}
         onMouseLeave={() => setIsHovering(false)}
         className={`fixed top-1/2 ${
-          isOpen ? "left-[12.5rem]" : "left-[0.8rem]"
+          isSidebarOpen ? "left-[12.5rem]" : "left-[0.8rem]"
         } -translate-y-1/2 transform z-50`}
       >
-        {isOpen ? (
-          isHovering ? (
-            <ChevronLeft />
+        <CustomTooltip
+          content={`${isSidebarOpen ? "Close Sidebar" : "Open Sidebar"}`}
+        >
+          {isSidebarOpen ? (
+            isHovering ? (
+              <ChevronLeft />
+            ) : (
+              <Tally1 className="ml-1" />
+            )
           ) : (
-            <Tally1 className="ml-1" />
-          )
-        ) : (
-          <ChevronRight />
-        )}
+            <ChevronRight />
+          )}
+        </CustomTooltip>
       </button>
     </>
   );

@@ -13,12 +13,10 @@ type CustomTooltipProps = {
 
 const CustomTooltip = ({ children, content }: CustomTooltipProps) => {
   return (
-    <TooltipProvider delayDuration={0.2}>
+    <TooltipProvider delayDuration={0.1}>
       <Tooltip>
         <TooltipTrigger>{children}</TooltipTrigger>
-        <TooltipContent>
-          <p>{content}</p>
-        </TooltipContent>
+        <TooltipContent className="z-[999]">{content}</TooltipContent>
       </Tooltip>
     </TooltipProvider>
   );

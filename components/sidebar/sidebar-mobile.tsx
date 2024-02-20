@@ -1,10 +1,11 @@
+import { useSidebarContext } from "@/context/sidebar-context";
+
 type SidebarMobileProps = {
   children: React.ReactNode;
-  isOpen: boolean;
-  toggleSidebar: () => void;
 };
 
-const SidebarMobile = ({ children, isOpen }: SidebarMobileProps) => {
+const SidebarMobile = ({ children }: SidebarMobileProps) => {
+  const { isSidebarOpen, setIsSidebarOpen } = useSidebarContext();
   return <div>SidebarMobile</div>;
 };
 

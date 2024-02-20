@@ -4,6 +4,7 @@ import { Loader2, Send } from "lucide-react";
 import { ChangeEvent, FormEvent, useEffect, useRef, useState } from "react";
 import FilePreviews from "../files/file-previews";
 import UploadFiles from "../files/upload-file";
+import CustomTooltip from "../ui/custom-tooltip";
 import { Textarea } from "../ui/textarea";
 
 type ChatInputProps = {
@@ -108,11 +109,12 @@ const ChatInput = ({
               <Send />
             </button>
           )}
-
-          <UploadFiles
-            className="absolute left-10 bottom-3"
-            setFiles={setFiles}
-          />
+          <CustomTooltip content="Upload Files">
+            <UploadFiles
+              className="absolute left-10 bottom-3"
+              setFiles={setFiles}
+            />
+          </CustomTooltip>
         </div>
       </form>
     </>

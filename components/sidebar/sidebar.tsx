@@ -4,7 +4,7 @@ import { useMediaQuery } from "@/hooks/useMediaQuery";
 import { SidebarMetaData } from "@/lib/types";
 import { debounce } from "@/lib/utils";
 import { usePathname } from "next/navigation";
-import { useCallback, useEffect } from "react";
+import { useEffect } from "react";
 import { SidebarChat } from "../chat-page/sidebar-chat";
 import SidebarDashboard from "../dashboard-page/sidebar-dashboard";
 import SidebarDesktop from "./sidebar-desktop";
@@ -18,10 +18,6 @@ const Sidebar = ({ sidebarMetaData }: SidebarProps) => {
   const pathname = usePathname();
   const isDesktop = useMediaQuery("(min-width: 768px)");
   const { isSidebarOpen, setIsSidebarOpen } = useSidebarContext();
-
-  const toggleSidebar = useCallback(() => {
-    setIsSidebarOpen((prev) => !prev);
-  }, [setIsSidebarOpen]);
 
   useEffect(() => {
     if (typeof window === "undefined") return;
@@ -47,16 +43,12 @@ const Sidebar = ({ sidebarMetaData }: SidebarProps) => {
   return (
     <>
       {isDesktop ? (
-        <SidebarDesktop
-          isOpen={isSidebarOpen}
-          toggleSidebar={toggleSidebar}
-          sidebarMetaData={sidebarMetaData}
-        >
+        <SidebarDesktop sidebarMetaData={sidebarMetaData}>
           {isChatPath && <SidebarChat sidebarMetaData={sidebarMetaData} />}
           {isDashboardPath && <SidebarDashboard />}
         </SidebarDesktop>
       ) : (
-        <SidebarMobile isOpen={isSidebarOpen} toggleSidebar={toggleSidebar}>
+        <SidebarMobile>
           {isChatPath && <SidebarChat sidebarMetaData={sidebarMetaData} />}
         </SidebarMobile>
       )}

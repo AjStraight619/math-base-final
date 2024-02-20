@@ -65,7 +65,6 @@ const SidebarDesktop = ({
         </div>
       </motion.aside>
       <button
-        key={isOpen ? "open" : "closed"}
         onClick={toggleSidebar}
         onMouseEnter={() => setIsHovering(true)}
         onMouseLeave={() => setIsHovering(false)}

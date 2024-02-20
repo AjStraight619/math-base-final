@@ -13,7 +13,7 @@ const ViewItem = ({ id }: { id: string }) => {
     }
   };
   return (
-    <Link className="flex" href={getRoute()}>
+    <Link className="flex items-center" href={getRoute()}>
       <ExternalLink size={20} />
       <span className="ml-2">View</span>
     </Link>

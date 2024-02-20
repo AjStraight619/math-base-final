@@ -20,18 +20,19 @@ const Search = () => {
   }, 300);
 
   return (
-    <>
-      <div className="relative w-full pr-2">
-        <Input
-          className="text-muted-foreground pl-10 w-full"
-          type="text"
-          placeholder="Search..."
-          onChange={(e) => handleSearch(e.target.value)}
-          defaultValue={searchParams.get("search")?.toString()}
-        />
-        <SearchIcon className="absolute left-3 top-1/2 transform -translate-y-1/2" />
-      </div>
-    </>
+    <div className="relative w-full pr-2 group focus:outline-none focus:ring-0 focus:ring-transparent">
+      <Input
+        className="text-muted-foreground pl-8 w-full"
+        type="text"
+        placeholder="Search..."
+        onChange={(e) => handleSearch(e.target.value)}
+        defaultValue={searchParams.get("search")?.toString()}
+      />
+      <SearchIcon
+        size={20}
+        className="absolute opacity-50 left-3 top-1/2 -translate-y-1/2 transition-opacity duration-100 group-focus-within:opacity-100"
+      />
+    </div>
   );
 };
 

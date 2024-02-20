@@ -1,6 +1,7 @@
 import { deleteChat } from "@/actions/chatActions";
+import { useToast } from "@/hooks/useToast";
 import { Trash2 } from "lucide-react";
-import toast from "react-hot-toast";
+import { useState } from "react";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -15,20 +16,30 @@ import {
 import SubmitButton from "../ui/submit-button";
 
 const DeleteItem = ({ id }: { id: string }) => {
+  const { showToast } = useToast();
+
+  const [isAccordionOpen, setIsAccordionOpen] = useState(false);
+
   const handleDelete = async () => {
     const { success, error } = await deleteChat(id);
+
     if (success) {
-      toast.success("Chat deleted");
+      showToast({ success: true, successMessage: "Chat deleted successfully" });
     } else {
-      toast.error(error);
+      showToast({ error });
     }
+    setIsAccordionOpen(false);
   };
 
   return (
-    <AlertDialog>
+    <AlertDialog
+      open={isAccordionOpen}
+      onOpenChange={() => setIsAccordionOpen((prev) => !prev)}
+    >
       <AlertDialogTrigger asChild>
-        <button className="hover:text-primary">
+        <button className="flex">
           <Trash2 size={20} />
+          <span className="ml-2">Delete</span>
         </button>
       </AlertDialogTrigger>
 

@@ -3,6 +3,8 @@ import { motion } from "framer-motion";
 import { ChevronLeft, ChevronRight, Tally1 } from "lucide-react";
 import { useState } from "react";
 import Header from "../ui/header";
+import { ScrollArea } from "../ui/scroll-area";
+import CreateNewChat from "../user-actions/create-new-chat";
 import UserOptions from "./user-options";
 
 type SidebarDesktopProps = {
@@ -43,16 +45,24 @@ const SidebarDesktop = ({
         animate={isOpen ? "visible" : "hidden"}
         variants={sidebarVariants}
         transition={spring}
-        className="fixed top-0 left-0 w-48 h-full flex flex-col justify-between border-r p-2 z-50 bg-black"
+        className="fixed top-0 left-0 w-48 h-full flex flex-col border-r pl-2 z-50 bg-black"
       >
-        <div>
-          <Header width={40} height={40} />
-          {children}
+        <div className="fixed top-2 left-1 w-full flex flex-row items-center justify-center">
+          <div className="flex flex-row items-center gap-x-4">
+            <Header width={40} height={40} />
+            <CreateNewChat />
+          </div>
         </div>
-        <UserOptions
-          mostRecentChatId={sidebarMetaData.chats[0]?.id}
-          mostRecentNoteId={sidebarMetaData.notes[0]?.id}
-        />
+
+        <ScrollArea className="flex-1 overflow-y-auto mt-12">
+          {children}
+        </ScrollArea>
+        <div className="mt-auto pr-2 mb-4 sm:mb-2">
+          <UserOptions
+            mostRecentChatId={sidebarMetaData.chats[0]?.id}
+            mostRecentNoteId={sidebarMetaData.notes[0]?.id}
+          />
+        </div>
       </motion.aside>
       <button
         key={isOpen ? "open" : "closed"}

@@ -1,11 +1,12 @@
 "use client";
 
+import { getChatById } from "@/actions/chatActions";
+import { useSidebarContext } from "@/context/sidebar-context";
 import { useId } from "@/hooks/useId";
 import { Prisma } from "@prisma/client";
 import { Message, UseChatOptions } from "ai";
 import { useChat } from "ai/react";
 import { useEffect, useMemo, useRef } from "react";
-import { getChatById } from "./chat-data";
 import ChatInput from "./chat-input";
 import ChatMessages from "./chat-messages";
 
@@ -35,8 +36,14 @@ const ChatWrapper = ({ chat }: ChatWrapperProps) => {
     console.log("component re rendered: ", counterRef.current);
   }, []);
 
+  const { isSidebarOpen } = useSidebarContext();
+
   return (
-    <>
+    <div
+      className={`transition-all duration-300 ${
+        isSidebarOpen ? "md:ml-64" : "md:ml-0"
+      }`}
+    >
       <ChatMessages messages={messages} error={error} />
       <ChatInput
         handleInputChange={handleInputChange}
@@ -45,7 +52,7 @@ const ChatWrapper = ({ chat }: ChatWrapperProps) => {
         reload={reload}
         input={input}
       />
-    </>
+    </div>
   );
 };
 

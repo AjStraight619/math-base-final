@@ -1,7 +1,8 @@
+import { useSidebarContext } from "@/context/sidebar-context";
 import { ChatRequestOptions } from "ai";
 import { Loader2, Send } from "lucide-react";
-import Image from "next/image";
 import { ChangeEvent, FormEvent, useEffect, useRef, useState } from "react";
+import FilePreviews from "../files/file-previews";
 import UploadFiles from "../files/upload-file";
 import { Textarea } from "../ui/textarea";
 
@@ -34,27 +35,9 @@ const ChatInput = ({
     console.log("Chat input re rendered: ", counterRef.current);
   }, []);
 
-  const renderFilePreviews = () => {
-    return files.map((file, index) => (
-      <div key={index} className="mr-2">
-        {file.type.startsWith("image/") ? (
-          <Image
-            src={URL.createObjectURL(file)}
-            alt={file.name}
-            className=""
-            width={60}
-            height={60}
-          />
-        ) : (
-          <span>{file.name}</span>
-        )}
-      </div>
-    ));
-  };
-
-  const getFileType = (file: File) => {
-    if (file.type === "aplication/pdf") return;
-  };
+  useEffect(() => {
+    console.log("Files changed: ", files);
+  }, [files]);
 
   const handleChatSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -95,18 +78,20 @@ const ChatInput = ({
     }
   };
 
+  const { isSidebarOpen } = useSidebarContext();
+
   return (
     <>
       <div className={`${files.length > 0 ? "mt-8" : ""}`}></div>
       <form
         ref={formRef}
         onSubmit={handleChatSubmit}
-        className={`fixed inset-x-0 bottom-0 pb-4 bg-transparent`}
+        className={`fixed inset-x-0 bottom-0 pb-4 bg-transparent transition-all duration-300 ${
+          isSidebarOpen ? "md:ml-64" : "md:ml-0"
+        }`}
       >
         <div className="container mx-auto flex flex-col items-center max-w-2xl relative">
-          <div className="flex overflow-x-auto pb-2 w-full justify-start items-center">
-            {renderFilePreviews()}
-          </div>
+          <FilePreviews files={files} setFiles={setFiles} />
 
           <Textarea
             onChange={handleInputChange}

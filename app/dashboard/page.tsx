@@ -19,7 +19,7 @@ export default async function DashboardPage({
   const filteredItems = filterItems(items, query);
 
   return (
-    <main className="flex flex-col items-center justify-center h-full w-full pb-8 md:pb-6">
+    <main className="flex flex-col items-center justify-center h-full w-full pb-8 md:pb-6 px-6">
       <Header />
       <Items items={filteredItems} />
     </main>

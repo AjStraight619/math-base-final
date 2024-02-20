@@ -13,8 +13,9 @@ const ViewItem = ({ id }: { id: string }) => {
     }
   };
   return (
-    <Link className="hover:text-primary" href={getRoute()}>
+    <Link className="flex" href={getRoute()}>
       <ExternalLink size={20} />
+      <span className="ml-2">View</span>
     </Link>
   );
 };

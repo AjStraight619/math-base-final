@@ -21,7 +21,7 @@ const ChatMessages = ({ messages, error }: ChatMessagesProps) => {
   // }, [messages]);
 
   return (
-    <div className="container mx-auto p-4 flex flex-col max-w-2xl">
+    <div className={`container p-4 flex flex-col max-w-2xl`}>
       <ul className="list-none flex flex-col space-y-4">
         {messages.map((message) => (
           <li key={message.id} className="flex flex-row gap-2">

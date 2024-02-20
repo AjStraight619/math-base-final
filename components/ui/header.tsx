@@ -11,7 +11,7 @@ type HeaderProps = {
 
 const Header = ({ width, height, className, textSize }: HeaderProps) => {
   return (
-    <header className="flex flex-row gap-2 items-center justify-start mt-2">
+    <header className="flex flex-row gap-2 items-center justify-start">
       <Image
         src={logo}
         alt="Math Base"

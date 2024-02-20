@@ -21,7 +21,7 @@ const Search = () => {
 
   return (
     <>
-      <div className="relative w-full">
+      <div className="relative w-full pr-2">
         <Input
           className="text-muted-foreground pl-10 w-full"
           type="text"

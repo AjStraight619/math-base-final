@@ -12,12 +12,11 @@ export const SidebarChat = ({ sidebarMetaData }: SidebarChatProps) => {
   const [currentView, setCurrentView] = useState("chats");
 
   const toggleView = (view: "chats" | "notes") => {
-    console.log("Current view: ", view);
     setCurrentView(view);
   };
 
   return (
-    <div className="flex flex-col gap-2">
+    <div className="flex flex-col gap-2 mt-4">
       <div className="flex flex-row items-center justify-evenly">
         <button onClick={() => toggleView("chats")}>Chats</button>
         <button onClick={() => toggleView("notes")}>Notes</button>

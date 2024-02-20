@@ -60,7 +60,7 @@ export const deleteChat = async (chatId: string) => {
   }
 };
 
-export const EditChat = async (formData: FormData) => {
+export const editChat = async (formData: FormData) => {
   console.log("In edit chat action");
   const id = formData.get("id") as string;
   const title = formData.get("title") as string;
@@ -91,4 +91,20 @@ export const EditChat = async (formData: FormData) => {
       error,
     };
   }
+};
+
+export const getChatById = async (chatId: string) => {
+  const chatById = await prisma.chat.findUnique({
+    where: {
+      id: chatId,
+    },
+    include: {
+      messages: {
+        orderBy: {
+          createdAt: "asc",
+        },
+      },
+    },
+  });
+  return chatById;
 };

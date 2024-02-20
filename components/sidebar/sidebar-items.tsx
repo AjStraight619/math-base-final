@@ -1,3 +1,6 @@
+import EditItemDialog from "@/components/user-actions/edit-item-dialog";
+import { useItemDetails } from "@/hooks/useItemDetails";
+import ItemOptions from "../common/item-options";
 import SidebarItem from "./sidebar-item";
 
 type SidebarItemsProps = {
@@ -8,16 +11,31 @@ type SidebarItemsProps = {
 };
 
 const SidebarItems = ({ items }: SidebarItemsProps) => {
-  const handleItemDelete = async (id: string) => {};
+  const { itemData, setItemData, isDialogOpen, setIsDialogOpen } =
+    useItemDetails();
 
   return (
-    <ul>
-      {items.map((item) => (
-        <li key={item.id}>
-          <SidebarItem item={item} />
-        </li>
-      ))}
-    </ul>
+    <>
+      <ul className="flex flex-col gap-4 md:gap-2">
+        {items.map((item) => (
+          <li
+            className="flex flex-row items-center justify-between pr-2"
+            key={item.id}
+          >
+            <SidebarItem item={item} />
+            <ItemOptions id={item.id} />
+          </li>
+        ))}
+      </ul>
+      {isDialogOpen && itemData && (
+        <EditItemDialog
+          itemData={itemData}
+          setItemData={setItemData}
+          setIsDialogOpen={setIsDialogOpen}
+          isDialogOpen={isDialogOpen}
+        />
+      )}
+    </>
   );
 };
 

@@ -55,7 +55,9 @@ const SlateToolbar = () => {
         event.preventDefault();
         button.action();
       }}
-      className={`${activeStates[button.format] ? "text-blue-500" : ""}`}
+      className={`${
+        activeStates[button.format] ? "text-blue-500" : ""
+      } w-8 h-8`}
     >
       {button.icon}
     </Button>

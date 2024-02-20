@@ -7,8 +7,11 @@ type SidebarItemProps = {
 
 const SidebarItem = ({ item }: SidebarItemProps) => {
   return (
-    <div className="flex flex-row items-center justify-between">
-      {item.title}
+    <div className="relative flex-grow">
+      <p className="text-sm text-primary/70 text-clip whitespace-nowrap overflow-hidden">
+        {item.title}
+      </p>
+      <div className="absolute right-0 top-0 bottom-0 w-8 bg-gradient-to-l from-transparent to-[yourBackgroundColor]"></div>
     </div>
   );
 };

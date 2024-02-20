@@ -16,6 +16,7 @@ const UploadFiles = ({ className, setFiles }: UploadFilesProps) => {
       const newFiles = Array.from(fileList);
       setFiles((prevFiles) => [...prevFiles, ...newFiles]);
     }
+    if (inputRef.current) inputRef.current.value = ""; // reset the input ref
   };
 
   return (

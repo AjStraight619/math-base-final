@@ -12,10 +12,12 @@ export const getSidebarMetaData = async () => {
       prisma.chat.findMany({
         where: { userId },
         select: { id: true, title: true },
+        orderBy: { updatedAt: "desc" },
       }),
       prisma.note.findMany({
         where: { userId },
         select: { id: true, title: true },
+        orderBy: { updatedAt: "desc" },
       }),
     ]);
 

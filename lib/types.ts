@@ -1,4 +1,6 @@
+import { getChatById } from "@/actions/chatActions";
 import { getDashboardData } from "@/actions/dashboardActions";
+import { getNoteById } from "@/actions/noteAction";
 import { getSidebarMetaData } from "@/actions/sidebar-actions";
 import { Prisma } from "@prisma/client";
 import { links } from "./data";
@@ -32,3 +34,7 @@ export type FolderWithLastNote = Prisma.FolderGetPayload<{
     };
   };
 }>[];
+
+export type Chat = Prisma.PromiseReturnType<typeof getChatById>;
+
+export type Note = Prisma.PromiseReturnType<typeof getNoteById>;

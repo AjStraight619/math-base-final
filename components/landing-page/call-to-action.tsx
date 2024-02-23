@@ -27,10 +27,10 @@ const CallToAction = () => {
         </Link>
       ) : (
         <>
-          <RegisterLink className="border-2 py-3 px-6 rounded-lg dark:text-black text-white bg-primary">
+          <RegisterLink className="border-2 py-3 px-6 rounded-lg dark:text-black hover:bg-primary/90 text-white bg-primary">
             Sign up
           </RegisterLink>
-          <LoginLink className="border-2 bg-transparent py-3 px-6 rounded-lg text-primary">
+          <LoginLink className="border-2 bg-background py-3 px-6 rounded-lg text-primary hover:bg-background/70">
             Log in
           </LoginLink>
         </>

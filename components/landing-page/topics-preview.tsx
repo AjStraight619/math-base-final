@@ -45,8 +45,8 @@ export const TopicsPreview = () => {
         once: true,
       }}
     >
-      <Card className="w-full mt-20 p-6 rounded-lg shadow-lg shadow-blue-700">
-        <CardHeader className="text-white text-2xl font-bold text-center mb-4">
+      <Card className="w-full mt-20 p-6 rounded-lg  dark:shadow-blue-700 shadow-md shadow-black">
+        <CardHeader className="dark:text-white text-primary text-2xl font-bold text-center mb-4">
           <CardTitle>Subjects We Cover</CardTitle>
           <CardDescription>
             Explore a variety of math subjects with personalized learning
@@ -65,7 +65,7 @@ export const TopicsPreview = () => {
                 key={index}
                 variants={itemVariants}
                 whileInView={{}}
-                className="bg-primary text-white dark:text-black p-4 rounded-lg cursor-pointer transition duration-300"
+                className="bg-primary text-white dark:text-black p-4 rounded-lg transition duration-300"
               >
                 {subject}
               </motion.li>

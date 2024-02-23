@@ -8,6 +8,7 @@ import { getUserId } from "./user-actions";
 export const getSidebarMetaData = async () => {
   try {
     const userId = await getUserId();
+    if (!userId) return { error: "User not found", chats: [], notes: [] };
     const [chats, notes] = await Promise.all([
       prisma.chat.findMany({
         where: { userId },

@@ -1,35 +1,35 @@
 "use client";
 import { useId } from "@/hooks/useId";
 import { Message } from "ai/react";
-import { useRef } from "react";
+import { useLayoutEffect, useRef } from "react";
 import { AiAvatar, UserAvatar } from "../avatars/avatars";
 import MarkdownRenderer from "./markdown-renderer";
 
 type ChatMessagesProps = {
   messages: Message[];
-  error: Error | undefined;
+  chatError: string;
 };
 
-const ChatMessages = ({ messages, error }: ChatMessagesProps) => {
+const ChatMessages = ({ messages, chatError }: ChatMessagesProps) => {
   const bottomOfMessagesRef = useRef<HTMLDivElement>(null);
   const id = useId();
 
-  // useLayoutEffect(() => {
-  //   if (bottomOfMessagesRef.current) {
-  //     bottomOfMessagesRef.current.scrollIntoView({ behavior: "smooth" });
-  //   }
-  // }, [messages]);
+  useLayoutEffect(() => {
+    if (bottomOfMessagesRef.current) {
+      bottomOfMessagesRef.current.scrollIntoView({ behavior: "smooth" });
+    }
+  }, [messages]);
 
   return (
-    <div className={`container p-4 flex flex-col max-w-2xl`}>
+    <div className={`container p-4 flex flex-col md:max-w-2xl w-full`}>
       <ul className="list-none flex flex-col space-y-4">
         {messages.map((message) => (
           <li key={message.id} className="flex flex-row gap-2">
             {message.role === "user" ? <UserAvatar /> : <AiAvatar />}
-            <div>
-              <MarkdownRenderer content={message.content} />
-              {/* <div ref={bottomOfMessagesRef}></div> */}
-            </div>
+
+            <MarkdownRenderer content={message.content} />
+            <div ref={bottomOfMessagesRef}></div>
+            {chatError && <p className="text-red-500">{chatError}</p>}
           </li>
         ))}
       </ul>

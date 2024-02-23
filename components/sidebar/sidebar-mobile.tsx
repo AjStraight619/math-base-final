@@ -6,7 +6,7 @@ type SidebarMobileProps = {
 
 const SidebarMobile = ({ children }: SidebarMobileProps) => {
   const { isSidebarOpen, setIsSidebarOpen } = useSidebarContext();
-  return <div>SidebarMobile</div>;
+  return <div></div>;
 };
 
 export default SidebarMobile;

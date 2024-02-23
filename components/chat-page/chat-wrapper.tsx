@@ -1,12 +1,12 @@
 "use client";
-
 import { getChatById } from "@/actions/chatActions";
 import { useSidebarContext } from "@/context/sidebar-context";
 import { useId } from "@/hooks/useId";
+import { getErrorMessage } from "@/lib/utils";
 import { Prisma } from "@prisma/client";
 import { Message, UseChatOptions } from "ai";
 import { useChat } from "ai/react";
-import { useEffect, useMemo, useRef } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import ChatInput from "./chat-input";
 import ChatMessages from "./chat-messages";
 
@@ -15,8 +15,8 @@ type ChatWrapperProps = {
 };
 
 const ChatWrapper = ({ chat }: ChatWrapperProps) => {
+  const [chatError, setChatError] = useState<string>("");
   const counterRef = useRef(0);
-  const bottomOfMessagesRef = useRef<HTMLDivElement>(null);
   const chatId = useId();
   const {
     messages,
@@ -24,10 +24,16 @@ const ChatWrapper = ({ chat }: ChatWrapperProps) => {
     handleInputChange,
     handleSubmit,
     isLoading,
-    error,
+
     reload,
   } = useExtendedChat({
-    options: { api: `/api/chat?chatId=${chatId}` },
+    options: {
+      api: `/api/chat?chatId=${chatId}`,
+      onError: (err) => {
+        const chatError = getErrorMessage(err);
+        setChatError(chatError);
+      },
+    },
     chat,
   });
 
@@ -44,7 +50,8 @@ const ChatWrapper = ({ chat }: ChatWrapperProps) => {
         isSidebarOpen ? "md:ml-64" : "md:ml-0"
       }`}
     >
-      <ChatMessages messages={messages} error={error} />
+      <ChatMessages messages={messages} chatError={chatError} />
+
       <ChatInput
         handleInputChange={handleInputChange}
         isLoading={isLoading}

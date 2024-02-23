@@ -14,18 +14,14 @@ const Items = ({ items }: ItemsProps) => {
   const { isSidebarOpen } = useSidebarContext();
   const { chats, folders, error } = items;
   return (
-    <div
-      className={`flex flex-col justify-center items-center gap-2 w-full pt-6 ${
-        isSidebarOpen ? "md:pl-8" : ""
-      }`}
-    >
-      {error && <p>Error: {error}</p>}
+    <>
+      {error && <p className="text-center">Error: {error}</p>}
       {activeItems === "Chats" ? (
         <ChatDisplay chats={chats} />
       ) : (
         <NoteDisplay folders={folders} />
       )}
-    </div>
+    </>
   );
 };
 

@@ -16,7 +16,7 @@ export const SidebarChat = ({ sidebarMetaData }: SidebarChatProps) => {
   };
 
   return (
-    <div className="flex flex-col gap-2 mt-4">
+    <div className="flex flex-col gap-2 mt-6">
       <div className="flex flex-row items-center justify-evenly">
         <button onClick={() => toggleView("chats")}>Chats</button>
         <button onClick={() => toggleView("notes")}>Notes</button>

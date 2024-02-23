@@ -5,7 +5,7 @@ import OpenAI from "openai";
 
 const baseUrl =
   process.env.NODE_ENV === "production"
-    ? "https://math-base.vercel.app"
+    ? "https://math-base-final.vercel.app"
     : "http://localhost:3000";
 
 type Message = {

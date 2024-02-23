@@ -8,29 +8,29 @@ export const newChat = async (formData: FormData) => {
   const userId = (await getUserId()) as unknown as string;
   console.log("In new chat action");
 
+  let newChat;
+
   try {
-    const newChat = await prisma.chat.create({
+    newChat = await prisma.chat.create({
       data: {
         userId,
         title: "New Chat",
       },
     });
-    console.log("New chat created: ", newChat);
-    revalidatePath("/");
     return {
       success: true,
       error: null,
+      chatId: newChat.id,
     };
   } catch (err) {
     const error = getErrorMessage(err);
-    console.log(error);
     return {
       success: false,
       error,
+      chatId: null,
     };
   }
 };
-
 export const deleteChat = async (chatId: string) => {
   try {
     await prisma.$transaction(async (prisma) => {

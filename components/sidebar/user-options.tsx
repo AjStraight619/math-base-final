@@ -1,20 +1,16 @@
 import { useKindeBrowserClient } from "@kinde-oss/kinde-auth-nextjs";
-import {
-  Bot,
-  LayoutDashboard,
-  LogOut,
-  MoreVertical,
-  NotebookPen,
-} from "lucide-react";
-import { useState } from "react";
+import { MoreVertical } from "lucide-react";
+import { useEffect, useState } from "react";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuTrigger,
 } from "../ui/dropdown-menu";
 
+import { logoutOption, userOptions } from "@/lib/data";
 import { motion } from "framer-motion";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { UserAvatar } from "../avatars/avatars";
 import { Separator } from "../ui/separator";
 import { Skeleton } from "../ui/skeleton";
@@ -51,41 +47,22 @@ const UserOptions = ({
 }: UserOptionsProps) => {
   const { isLoading, user } = useKindeBrowserClient();
   const [open, setOpen] = useState(false);
+  const pathname = usePathname();
 
-  const userOptions = [
-    {
-      name: "Dashboard",
-      link: "/dashboard",
-      icon: <LayoutDashboard />,
-    },
-    {
-      name: "Chats",
-      link: `/chat/${mostRecentChatId}`,
-      icon: <Bot />,
-    },
-    {
-      name: "Notes",
-      link: "/note",
-      icon: <NotebookPen />,
-    },
-  ];
-
-  const logoutOption = {
-    name: "Logout",
-    link: "/api/auth/logout",
-    icon: <LogOut />,
-  };
+  useEffect(() => {
+    setOpen(false);
+  }, [pathname]);
 
   return (
     <DropdownMenu open={open} onOpenChange={() => setOpen(!open)}>
       <DropdownMenuTrigger asChild>
-        <div className="w-full pr-2 py-2 pl-1 flex flex-row items-center justify-start border rounded-md hover:cursor-pointer gap-1 relative">
+        <div className="w-full pr-2 py-2 pl-1 flex flex-row items-center justify-start border rounded-md hover:cursor-pointer gap-1 relative mb-2">
           {isLoading && <Skeleton />}
           <UserAvatar />
           <span className="whitespace-nowrap overflow-hidden overflow-ellipsis max-w-full block text-sm">
             {user?.given_name} {user?.family_name}
           </span>
-          <div className="absolute right-0 top-0 h-full w-8 bg-gradient-to-l from-transparent to-black"></div>
+          <div className="absolute right-0 top-0 h-full w-8 bg-gradient-to-l from-transparent dark:to-black to-gray-400"></div>
           <MoreVertical className="absolute right-1 top-1/2 -translate-y-1/2" />
         </div>
       </DropdownMenuTrigger>
@@ -99,8 +76,12 @@ const UserOptions = ({
           {userOptions.map((option, index) => (
             <motion.li variants={item} className="w-full" key={index}>
               <Link
-                className="flex justify-start items-center text-primary/60 hover:text-primary gap-2"
-                href={option.link}
+                className="flex justify-start items-center dark:text-primary/60 dark:hover:text-primary gap-2 "
+                href={
+                  option.name === "Chats"
+                    ? `${option.link}/${mostRecentChatId}`
+                    : option.link
+                }
                 scroll={false}
               >
                 <span>{option.icon}</span>

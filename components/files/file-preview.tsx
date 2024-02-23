@@ -55,7 +55,7 @@ export default FilePreview;
 
 const getFilePreview = (file: File) => {
   return (
-    <div className="flex flex-row max-w-[12rem] max-h-[4rem] bg-backround border rounded-md p-2 gap-1">
+    <div className="flex flex-row max-w-[12rem] max-h-[4rem] bg-background border rounded-md p-2 gap-1 z-[999]">
       <div className="p-2 rounded-md bg-red-400">
         <FileText className="h-full" />
       </div>

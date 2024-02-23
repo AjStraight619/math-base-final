@@ -1,5 +1,6 @@
+"use client";
+
 import ItemOptions from "@/components/common/item-options";
-import { useSidebarContext } from "@/context/sidebar-context";
 import { ChatWithLastMessage } from "@/lib/types";
 import { motion } from "framer-motion";
 import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
@@ -25,8 +26,6 @@ const items = {
 };
 
 const ChatDisplay = ({ chats }: ChatDisplayProps) => {
-  const { isSidebarOpen } = useSidebarContext();
-
   return (
     <>
       <header className="text-muted-foreground">Most recent chats</header>
@@ -34,19 +33,16 @@ const ChatDisplay = ({ chats }: ChatDisplayProps) => {
         variants={itemVariants}
         animate="show"
         initial="hidden"
-        className={`grid grid-cols-1 gap-2 px-4 justify-items-center align-middle ${
-          isSidebarOpen
-            ? "md:grid-cols-2 sm:grid-cols-2 lg:grid-cols-3"
-            : "md:grid-cols-3 sm:grid-cols-3 lg:grid-cols-5 mx-auto"
-        }`}
+        className="grid grid-cols-1 md:grid-cols-2 lg-grid-cols-3 gap-2 mt-4"
       >
         {chats.map((chat) => (
           <motion.li
             variants={items}
             whileHover={{ scale: 1.05 }}
             key={chat.id}
+            className="w-full"
           >
-            <Card className="max-w-[12rem] h-[14rem] relative">
+            <Card className="max-w-[12rem] h-[14rem] relative flex flex-col z-[50]">
               <CardHeader>
                 <CardTitle className="flex flex-row justify-between items-center p-1">
                   <span className="text-lg">{chat.title}</span>
@@ -60,7 +56,8 @@ const ChatDisplay = ({ chats }: ChatDisplayProps) => {
                   {chat.messages[0]?.content}
                 </p>
               </CardContent>
-              <div className="absolute bottom-2 w-full">
+
+              <div className="absolute bottom-1 right-1">
                 <ItemOptions id={chat?.id} iconSize={20} />
               </div>
             </Card>

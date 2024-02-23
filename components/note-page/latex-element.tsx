@@ -1,36 +1,38 @@
 import "katex/dist/katex.min.css"; // Don't forget to import the CSS
-import { useState } from "react";
 import ReactMarkdown from "react-markdown";
 import rehypeKatex from "rehype-katex";
 import remarkMath from "remark-math";
-import { Transforms } from "slate";
-import { ReactEditor, RenderElementProps, useSlateStatic } from "slate-react";
+import { RenderElementProps } from "slate-react";
+
+import { useFocused, useSelected } from "slate-react";
 
 export const LatexElement = (props: RenderElementProps) => {
-  const { element, attributes } = props;
-  const editor = useSlateStatic();
-  const [editMode, setEditMode] = useState(false);
+  const { attributes, children, element } = props;
+  const selected = useSelected();
+  const focused = useFocused();
   const latexContent = element.children.map((child) => child.text).join("");
 
-  const toggleEditMode = () => {
-    setEditMode(!editMode);
-  };
-
-  // When leaving edit mode, update the Slate document with the new LaTeX content
-  const handleBlur = (e: any) => {
-    const newText = e.target.value;
-    const path = ReactEditor.findPath(editor, element);
-    Transforms.setNodes(
-      editor,
-      { type: "latex", children: [{ text: newText }] },
-      { at: path }
-    );
-    setEditMode(false);
-  };
-
+  // Add `contentEditable={false}` to prevent editing
   return (
-    <ReactMarkdown rehypePlugins={[rehypeKatex]} remarkPlugins={[remarkMath]}>
-      {latexContent}
-    </ReactMarkdown>
+    <span
+      {...attributes}
+      contentEditable={false}
+      style={{ userSelect: "none" }}
+    >
+      <ReactMarkdown rehypePlugins={[rehypeKatex]} remarkPlugins={[remarkMath]}>
+        {latexContent}
+      </ReactMarkdown>
+      {selected && focused && (
+        <span
+          style={{
+            position: "absolute",
+            left: "0",
+            right: "0",
+            top: "0",
+            bottom: "0",
+          }}
+        />
+      )}
+    </span>
   );
 };

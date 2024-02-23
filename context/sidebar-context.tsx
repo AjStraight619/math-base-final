@@ -16,7 +16,9 @@ export default function SidebarContextProvider({
 }: {
   children: React.ReactNode;
 }) {
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(
+    () => typeof window !== "undefined" && window.innerWidth > 768
+  );
 
   return (
     <SidebarContext.Provider value={{ isSidebarOpen, setIsSidebarOpen }}>

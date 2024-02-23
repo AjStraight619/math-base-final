@@ -1,3 +1,6 @@
+import { Bot, LayoutDashboard, LogOut, NotebookPen } from "lucide-react";
+import React from "react";
+
 export const links = [
   {
     name: "Home",
@@ -78,3 +81,27 @@ export const mathSubjects = [
   "Trigonometry",
   "Linear Algebra",
 ] as const;
+
+export const userOptions = [
+  {
+    name: "Dashboard",
+    link: "/dashboard",
+    icon: React.createElement(LayoutDashboard),
+  },
+  {
+    name: "Chats",
+    link: `/chat`,
+    icon: React.createElement(Bot),
+  },
+  {
+    name: "Notes",
+    link: "/note",
+    icon: React.createElement(NotebookPen),
+  },
+] as const;
+
+export const logoutOption = {
+  name: "Logout",
+  link: "/api/auth/logout",
+  icon: React.createElement(LogOut),
+} as const;

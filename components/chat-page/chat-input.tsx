@@ -4,7 +4,6 @@ import { Loader2, Send } from "lucide-react";
 import { ChangeEvent, FormEvent, useEffect, useRef, useState } from "react";
 import FilePreviews from "../files/file-previews";
 import UploadFiles from "../files/upload-file";
-import CustomTooltip from "../ui/custom-tooltip";
 import { Textarea } from "../ui/textarea";
 
 type ChatInputProps = {
@@ -74,8 +73,8 @@ const ChatInput = ({
       const dummyEvent = {
         preventDefault: () => {},
         currentTarget: formRef.current,
-      } as unknown as FormEvent<HTMLFormElement>; // Casting to match expected type
-      handleSubmit(dummyEvent); // Directly call the handleSubmit function
+      } as unknown as FormEvent<HTMLFormElement>;
+      handleSubmit(dummyEvent);
     }
   };
 
@@ -83,7 +82,7 @@ const ChatInput = ({
 
   return (
     <>
-      <div className={`${files.length > 0 ? "mt-8" : ""}`}></div>
+      <div className={`${files.length > 0 ? "mt-16" : ""}`}></div>
       <form
         ref={formRef}
         onSubmit={handleChatSubmit}
@@ -98,7 +97,7 @@ const ChatInput = ({
             onChange={handleInputChange}
             value={input}
             placeholder="Type a message..."
-            className="h-12 min-h-[48px] max-h-[200px] outline-none border rounded-xl p-3 bg-slate-900 overflow-hidden resize-none placeholder:text-base text-base w-full px-[2.5rem]"
+            className="h-12 min-h-[48px] max-h-[200px] outline-none border rounded-xl p-3  overflow-hidden resize-none placeholder:text-base text-base w-full px-[2.5rem]"
             onKeyDown={handleKeyDown}
           />
 
@@ -109,12 +108,11 @@ const ChatInput = ({
               <Send />
             </button>
           )}
-          <CustomTooltip content="Upload Files">
-            <UploadFiles
-              className="absolute left-10 bottom-3"
-              setFiles={setFiles}
-            />
-          </CustomTooltip>
+
+          <UploadFiles
+            className="absolute left-10 bottom-3"
+            setFiles={setFiles}
+          />
         </div>
       </form>
     </>

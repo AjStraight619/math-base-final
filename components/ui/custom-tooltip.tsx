@@ -16,7 +16,9 @@ const CustomTooltip = ({ children, content }: CustomTooltipProps) => {
     <TooltipProvider delayDuration={0.1}>
       <Tooltip>
         <TooltipTrigger asChild>{children}</TooltipTrigger>
-        <TooltipContent className="z-[999]">{content}</TooltipContent>
+        <TooltipContent>
+          <p className="z-[999]">{content}</p>
+        </TooltipContent>
       </Tooltip>
     </TooltipProvider>
   );

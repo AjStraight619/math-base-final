@@ -42,7 +42,7 @@ const SidebarDesktop = ({ children, sidebarMetaData }: SidebarDesktopProps) => {
         animate={isSidebarOpen ? "visible" : "hidden"}
         variants={sidebarVariants}
         transition={spring}
-        className="fixed top-0 left-0 w-48 h-full flex flex-col border-r pl-2 z-50 bg-black"
+        className="fixed top-0 left-0 w-48 h-full flex flex-col z-50 border-r pl-2  dark:bg-black bg-gray-400"
       >
         <div className="fixed top-2 left-1 w-full flex flex-row items-center justify-center">
           <div className="flex flex-row items-center gap-x-4">

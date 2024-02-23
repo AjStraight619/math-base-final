@@ -17,7 +17,7 @@ type SidebarProps = {
 const Sidebar = ({ sidebarMetaData }: SidebarProps) => {
   const pathname = usePathname();
   const isDesktop = useMediaQuery("(min-width: 768px)");
-  const { isSidebarOpen, setIsSidebarOpen } = useSidebarContext();
+  const { setIsSidebarOpen } = useSidebarContext();
 
   useEffect(() => {
     if (typeof window === "undefined") return;

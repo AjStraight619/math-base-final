@@ -65,7 +65,7 @@ export const TopicsPreview = () => {
                 key={index}
                 variants={itemVariants}
                 whileInView={{}}
-                className="bg-primary text-black p-4 rounded-lg cursor-pointer transition duration-300"
+                className="bg-primary text-white dark:text-black p-4 rounded-lg cursor-pointer transition duration-300"
               >
                 {subject}
               </motion.li>

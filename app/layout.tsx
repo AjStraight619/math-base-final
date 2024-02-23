@@ -1,6 +1,7 @@
 import { getSidebarMetaData } from "@/actions/sidebar-actions";
 import { ThemeProvider } from "@/components/providers/theme-provider";
 import Sidebar from "@/components/sidebar/sidebar";
+import { ModeToggle } from "@/components/ui/mode-toggle";
 import ActiveItemContextProvider from "@/context/active-item-context";
 import ActiveSectionContextProvider from "@/context/active-section-context";
 import SidebarContextProvider from "@/context/sidebar-context";
@@ -44,7 +45,7 @@ export default async function RootLayout({
                 </SidebarContextProvider>
               </ActiveItemContextProvider>
             </ActiveSectionContextProvider>
-            {/* <ModeToggle /> */}
+            <ModeToggle />
             <Toaster />
           </ThemeProvider>
           <Analytics />

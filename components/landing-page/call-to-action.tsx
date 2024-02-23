@@ -17,7 +17,7 @@ const CallToAction = () => {
     >
       {user ? (
         <Link
-          className="group border-2 flex px-3 py-6 rounded-lg text-black transition duration-300 ease-in-out bg-gradient-to-r from-gray-200 to-gray-400"
+          className="group border-2 flex px-3 py-6 rounded-lg transition duration-300 ease-in-out bg-gradient-to-r from-gray-200 to-gray-400"
           href="/dashboard"
         >
           Continue to dashboard
@@ -27,10 +27,10 @@ const CallToAction = () => {
         </Link>
       ) : (
         <>
-          <RegisterLink className="border-2 bg-primary py-3 px-6 rounded-lg text-black">
+          <RegisterLink className="border-2 py-3 px-6 rounded-lg dark:text-black text-white bg-primary">
             Sign up
           </RegisterLink>
-          <LoginLink className="border-2  bg-transparent py-3 px-6 rounded-lg">
+          <LoginLink className="border-2 bg-transparent py-3 px-6 rounded-lg text-primary">
             Log in
           </LoginLink>
         </>
